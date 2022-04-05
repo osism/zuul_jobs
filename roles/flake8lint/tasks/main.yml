@@ -1,0 +1,32 @@
+---
+# tasks file for flake8lint
+- name: Install python
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
+- name: Install flake8
+  ansible.builtin.pip:
+    name: flake8
+    executable: pip3
+
+- name: Find all .py files
+  ansible.builtin.find:
+    paths: "{{ zuul_work_dir }}"
+    pattern: "*.py"
+  register: py_files
+
+- name: Run flake8
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      set -e
+      python3 -m flake8 {{ file|relpath(zuul_work_dir) }} 2>&1 | tee -a flake8.txt
+    chdir: "{{ zuul_work_dir }}"
+    executable: /bin/bash
+  loop: "{{ py_files.files|map(attribute='path')|list }}"
+  loop_control:
+    loop_var: file
+  changed_when: false

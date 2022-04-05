@@ -1,0 +1,3 @@
+---
+# defaults file for flake8lint
+zuul_work_dir: "{{ zuul.project.src_dir }}"

@@ -1,0 +1,5 @@
+---
+- name: Yamllint
+  hosts: all
+  roles:
+    - yamllint

@@ -1,0 +1,13 @@
+---
+- job:
+    name: yamllint
+    run: .playbooks/yamllint.yaml
+
+- project:
+    default-branch: main
+    check:
+      jobs:
+        - yamllint
+    gate:
+      jobs:
+        - yamllint

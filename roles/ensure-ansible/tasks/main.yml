@@ -1,0 +1,13 @@
+---
+# tasks file for ensure-ansible
+- name: Install python
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
+- name: Install ansible
+  ansible.builtin.pip:
+    name: ansible
+    executable: pip3

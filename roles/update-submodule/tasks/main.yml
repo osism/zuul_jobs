@@ -1,0 +1,46 @@
+---
+# tasks file for update-submodule
+- name: Initialize submodules
+  ansible.builtin.shell: git submodule update --init
+  changed_when: false
+
+- name: Checkout new branch
+  ansible.builtin.shell: "git checkout -b {{ git_new_branch }}"
+  changed_when: false
+
+- name: Update submodules
+  ansible.builtin.shell: "git submodule update --remote"
+  changed_when: false
+
+- name: Set git username
+  ansible.builtin.shell: "git config --global user.name {{ git_username }}"
+  changed_when: false
+
+- name: Set git email
+  ansible.builtin.shell: "git config --global user.email {{ git_email }}"
+  changed_when: false
+
+- name: Commit changes
+  ansible.builtin.shell: "git commit -s -m {{ pr_title }}"
+  changed_when: false
+
+- name: Push changes
+  ansible.builtin.shell: "git push -u origin {{ git_new_branch }}"
+
+- name: Create pull request
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/{{ git_repo }}/pulls"
+    user: "{{ auth_user }}"
+    password: "{{ auth_token }}"
+    method: POST
+    body_format: json
+    body:
+      title: "{{ pr_title }}"
+      body: "{{ pr_body }}"
+      head: "{{ git_new_branch }}"
+      base: "{{ git_base_branch }}"
+    headers:
+      Content-Type: application/json
+    force_basic_auth: True
+    status_code: 201
+  changed_when: false

@@ -1,0 +1,11 @@
+---
+# defaults file for update-submodule
+git_username: "OSISM bot"
+git_email: "bot@osism.tech"
+git_repo: "{{ zuul.project.name }}"
+git_base_branch: "main"
+git_new_branch: "chore/update-submodules"
+pr_title: "chore: update submodules"
+pr_body: "{{ pr_title }}"
+auth_user: "osism-bot"
+auth_token: "ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

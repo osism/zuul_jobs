@@ -1,0 +1,4 @@
+---
+- job: 
+    name: ansible-lint
+    run: playbooks/ansible-lint/run.yaml

@@ -1,0 +1,24 @@
+---
+# tasks for ansible-lint
+- name: Install python
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
+- name: Install ansible-lint
+  ansible.builtin.pip:
+    name: 
+      - ansible-lint
+      - ansible
+    executable: pip3
+
+- name: run ansible-lint
+  ansible.builtin.command:
+    cmd: /usr/bin/python3 -m ansiblelint --nocolor .
+    chdir: "{{ zuul_work_dir }}"
+  register: ansible_lint_output
+  changed_when: false
+  failed_when:
+    - ansible_lint_output.rc != 0 or (6 | extract(ansible_lint_output.stderr_lines | last | split(' '))) | int > 0

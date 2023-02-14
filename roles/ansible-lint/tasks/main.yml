@@ -7,13 +7,15 @@
     - ensure-python
     - ensure-pip
 
+- name: Install ansible
+  become: true
+  ansible.builtin.package:
+    name: ansible
+
 - name: Install ansible-lint
   ansible.builtin.pip:
-    name: 
-      - ansible
-      - ansible-lint
+    name: ansible-lint
     executable: pip3
-    extra_args: --user
 
 - name: run ansible-lint
   ansible.builtin.command:

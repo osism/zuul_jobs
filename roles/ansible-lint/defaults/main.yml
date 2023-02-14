@@ -1,0 +1,3 @@
+---
+# defaults file for ansible-lint
+zuul_work_dir: "{{ zuul.project.src_dir }}"

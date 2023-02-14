@@ -10,8 +10,8 @@
 - name: Install ansible-lint
   ansible.builtin.pip:
     name: 
-      - ansible-lint
       - ansible
+      - ansible-lint
     executable: pip3
 
 - name: run ansible-lint

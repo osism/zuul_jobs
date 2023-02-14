@@ -13,6 +13,7 @@
       - ansible
       - ansible-lint
     executable: pip3
+    extra_args: --user
 
 - name: run ansible-lint
   ansible.builtin.command:

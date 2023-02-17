@@ -1,5 +1,5 @@
 ---
-# tasks file for flake8lint
+# tasks file for flake8
 - name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"

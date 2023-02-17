@@ -4,5 +4,9 @@
     run: playbooks/ansible-lint/run.yaml
 
 - job:
+    name: flake8
+    run: playbooks/flake8/run.yaml
+
+- job:
     name: yamllint
     run: playbooks/yamllint/run.yaml

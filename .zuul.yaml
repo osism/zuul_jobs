@@ -2,3 +2,7 @@
 - job: 
     name: ansible-lint
     run: playbooks/ansible-lint/run.yaml
+
+- job:
+    name: yamllint
+    run: playbooks/yamllint/run.yaml

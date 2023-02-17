@@ -17,7 +17,7 @@
     name: ansible-lint
     executable: pip3
 
-- name: run ansible-lint
+- name: Run ansible-lint
   ansible.builtin.command:
     cmd: /usr/bin/python3 -m ansiblelint --nocolor .
     chdir: "{{ zuul_work_dir }}"

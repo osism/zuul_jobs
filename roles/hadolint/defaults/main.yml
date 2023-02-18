@@ -1,0 +1,5 @@
+# defaults file for hadolint
+---
+zuul_work_dir: "{{ zuul.project.src_dir }}"
+
+hadolint_version: "v2.12.0"

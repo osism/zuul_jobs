@@ -1,0 +1,26 @@
+# tasks file for hadolint
+---
+- name: Install hadolint
+  become: true
+  ansible.builtin.get_url:
+    url: "https://github.com/hadolint/hadolint/releases/download/{{ hadolint_version }}/hadolint-Linux-x86_64"
+    dest: /usr/local/bin/hadolint
+    checksum: "sha256:https://github.com/hadolint/hadolint/releases/download/{{ hadolint_version }}/hadolint-Linux-x86_64.sha256"
+    mode: '0755'
+
+- name: Find all Containerfile and Dockerfile files
+  ansible.builtin.find:
+    paths: "{{ zuul_work_dir }}"
+    pattern: "Containerfile*,Dockerfile*"
+  register: files
+
+- name: Run hadolint
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      set -e
+      /usr/local/bin/hadolint {{ item|relpath(zuul_work_dir) }} 2>&1 | tee -a hadolint.txt
+    chdir: "{{ zuul_work_dir }}"
+    executable: /bin/bash
+  loop: "{{ files.files|map(attribute='path')|list }}"
+  changed_when: false

@@ -8,6 +8,10 @@
     run: playbooks/flake8/run.yaml
 
 - job:
+    name: hadolint
+    run: playbooks/hadolint/run.yaml
+
+- job:
     name: yamllint
     run: playbooks/yamllint/run.yaml
 

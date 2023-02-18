@@ -10,3 +10,14 @@
 - job:
     name: yamllint
     run: playbooks/yamllint/run.yaml
+
+- project:
+    merge-mode: squash-merge
+    check:
+      jobs:
+        - ansible-lint
+        - yamllint
+    gate:
+      jobs:
+        - ansible-lint
+        - yamllint

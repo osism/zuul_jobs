@@ -17,9 +17,26 @@
     name: ansible-lint
     executable: pip3
 
+- name: Create .ansible-lint-rules directory
+  ansible.builtin.file:
+    path: "{{ zuul_work_dir }}/.ansible-lint-rules"
+    state: directory
+    mode: '0755'
+
+- name: Copy OSISM specific ansible lint rules to .ansible-lint-rules directory
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ zuul_work_dir }}/.ansible-lint-rules/{{ item }}"
+    mode: '0644'
+  loop:
+    - osism_attribute_order.py
+    - osism_attribute_order_list.yaml
+    - osism_fqcn.py
+    - osism_fqcn_list.yaml
+
 - name: Run ansible-lint
   ansible.builtin.command:
-    cmd: /usr/bin/python3 -m ansiblelint --nocolor .
+    cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R -r {{ zuul_work_dir }}/.ansible-lint-rules ."
     chdir: "{{ zuul_work_dir }}"
   register: ansible_lint_output
   changed_when: false

@@ -1,5 +1,12 @@
 # tasks file for devstack
 ---
+- name: Install dependencies
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
 - name: Run preparations
   ansible.builtin.shell:
     cmd: |

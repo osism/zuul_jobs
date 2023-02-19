@@ -1,0 +1,66 @@
+# tasks file for devstack
+---
+- name: Run preparations
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      set -o xtrace
+      set -e
+
+      # NOTE: There is probably a better Zuul-like way to do this.
+      git clone --branch {{ devstack_release }} https://opendev.org/openstack/devstack.git
+
+      sudo apt-get update
+
+      # NOTE: https://github.com/EmilienM/devstack-action/blob/main/action.yaml
+      sudo apt-get remove --purge -y \
+          esl-erlang \
+          mysql-* \
+          postgresql* \
+          python3-pyasn1-modules \
+          python3-simplejson || true
+      sudo rm -rf /var/lib/mysql
+      sudo apt-get install -y --fix-missing \
+          erlang \
+          rabbitmq-server
+
+      python3 -m pip --no-cache-dir install -U 'pip==23.0.1'
+    chdir: "{{ zuul_work_dir }}"
+    executable: /bin/bash
+  changed_when: false
+
+- name: Prepare configuration
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      set -o xtrace
+      set -e
+
+      sudo cat << EOT > local.conf
+      [[local|localrc]]
+      ADMIN_PASSWORD={{ devstack_password }}
+      DATABASE_PASSWORD={{ devstack_password }}
+      RABBIT_PASSWORD={{ devstack_password }}
+      SERVICE_PASSWORD={{ devstack_password }}
+
+      HOST_IP=127.0.0.1
+      INSTALL_TEMPEST=False
+
+      disable_all_services
+      enable_service mysql {{ devstack_services }}
+      EOT
+    chdir: "{{ zuul_work_dir }}/devstack"
+    executable: /bin/bash
+  changed_when: false
+
+- name: Run devstack
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      set -o xtrace
+      set -e
+
+      bash stack.sh
+    chdir: "{{ zuul_work_dir }}/devstack"
+    executable: /bin/bash
+  changed_when: false

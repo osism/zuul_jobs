@@ -7,6 +7,20 @@
     - ensure-python
     - ensure-pip
 
+- name: Create /opt/stack directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: zuul
+    group: zuul
+    mode: '0755'
+  loop:
+    - /opt/stack
+    - /opt/stack/data
+    - /opt/stack/logs
+    - /opt/stack/status
+
 - name: Run preparations
   ansible.builtin.shell:
     cmd: |

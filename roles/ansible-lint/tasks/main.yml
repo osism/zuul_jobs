@@ -1,5 +1,5 @@
-# tasks for ansible-lint
 ---
+# tasks for ansible-lint
 - name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"
@@ -7,10 +7,10 @@
     - ensure-python
     - ensure-pip
 
-- name: Install ansible-core
-  ansible.builtin.pip:
-    name: ansible-core
-    executable: pip3
+- name: Install ansible
+  become: true
+  ansible.builtin.package:
+    name: ansible
 
 - name: Install ansible-lint
   ansible.builtin.pip:

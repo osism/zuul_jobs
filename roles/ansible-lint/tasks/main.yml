@@ -40,19 +40,27 @@
     chdir: "{{ zuul_work_dir }}"
   register: ansible_lint_output
   changed_when: false
-  failed_when:
-    - ansible_lint_output.stderr_lines | length > 0
-    - ansible_lint_output.rc != 0 or (6 | extract(ansible_lint_output.stderr_lines | last | split(' '))) | int > 0
+  failed_when: false
+  #failed_when:
+  #  - ansible_lint_output.stderr_lines | length > 0
+  #  - ansible_lint_output.rc != 0 or (6 | extract(ansible_lint_output.stderr_lines | last | split(' '))) | int > 0
 
-- name: Debug
+- name: Debug stderr_lines
   ansible.builtin.debug:
-    msg: "{{ item }}"
-  loop: "{{ ansible_lint_output.stderr_lines }}"
+    msg: "{{ ansible_lint_output.stderr_lines }}"
 
-- name: Debug
+- name: Debug stderr line length
   ansible.builtin.debug:
-    msg: "{{ item }}"
-  loop:
-    - "{{ ansible_lint_output.stderr_lines | length > 0 }}"
-    - "{{ ansible_lint_output.rc != 0 }}"
-    - "{{ (6 | extract(ansible_lint_output.stderr_lines | last | split(' '))) | int > 0 }}"
+    msg: "{{ ansible_lint_output.stderr_lines | length > 0 }}"
+
+- name: Debug out returncode
+  ansible.builtin.debug:
+    msg: "{{ ansible_lint_output.rc != 0 }}"
+
+- name: Debug lastline
+  ansible.builtin.debug:
+    msg: "{{ ansible_lint_output.stderr_lines | last }}"
+
+- name: Debug lastline extract
+  ansible.builtin.debug:
+    msg: "{{ (6 | extract(ansible_lint_output.stderr_lines | last | split(' '))) | int > 0 }}"

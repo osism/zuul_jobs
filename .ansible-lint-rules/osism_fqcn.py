@@ -16,7 +16,7 @@ class OsismFQCNRule(AnsibleLintRule):
     description = (
         "Check whether the long version is used in the playbook"
     )
-    tags = ["formatting", "experimental"]
+    tags = ["formatting"]
 
     def matchtask(
         self, task: Dict[str, Any], file: Optional[Lintable] = None

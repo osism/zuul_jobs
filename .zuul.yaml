@@ -4,6 +4,10 @@
     run: playbooks/ansible-lint/run.yaml
 
 - job:
+    name: dcolicense
+    run: playbooks/dcolicense/run.yaml
+
+- job:
     name: devstack
     run: playbooks/devstack/run.yaml
 

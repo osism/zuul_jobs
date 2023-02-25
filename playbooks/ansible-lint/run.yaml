@@ -1,4 +1,5 @@
 ---
-- hosts: all
+- name: Ansible-lint
+  hosts: all
   roles:
     - ansible-lint

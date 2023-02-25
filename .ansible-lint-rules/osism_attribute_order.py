@@ -12,8 +12,8 @@ class OsismAttributeOrderRule(AnsibleLintRule):
 
     id = "osism-attribute-order"
     shortdesc = __doc__
-    severity = "LOW"
-    tags = ["formatting", "experimental"]
+    severity = "MEDIUM"
+    tags = ["formatting"]
     needs_raw_task = True
 
     def matchtask(

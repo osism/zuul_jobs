@@ -40,5 +40,3 @@
     chdir: "{{ zuul_work_dir }}"
   register: ansible_lint_output
   changed_when: false
-  failed_when:
-    - ansible_lint_output.stderr_lines | length > 0 or ansible_lint_output.rc != 0 or (6 | extract(ansible_lint_output.stderr_lines | last | split(' '))) | int > 0

@@ -1,4 +1,5 @@
 ---
-- hosts: all
+- name: Flake8
+  hosts: all
   roles:
     - flake8

@@ -138,6 +138,11 @@ utils:
   - ansible.utils.to_paths
   - ansible.utils.validate
 
+community.crypto:
+  - community.crypto.openssl_privatekey
+  - community.crypto.openssl_csr_pipe
+  - community.crypto.x509_certificate_pipe
+
 community.docker:
   - community.docker.current_container_facts
   - community.docker.docker_compose

@@ -247,6 +247,7 @@ community.general:
   - community.general.etcd
   - community.general.etcd3
   - community.general.filetree
+  - community.general.filesystem
   - community.general.flattened
   - community.general.hiera
   - community.general.keyring

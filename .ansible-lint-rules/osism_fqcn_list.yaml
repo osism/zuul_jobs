@@ -472,3 +472,6 @@ other:
   - hashivault_secret_engine
   - hashivault_auth_method
   - hashivault_policy
+
+kolla:
+  - kolla_toolbox

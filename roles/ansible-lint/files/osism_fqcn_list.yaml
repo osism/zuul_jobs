@@ -247,6 +247,7 @@ community.general:
   - community.general.etcd
   - community.general.etcd3
   - community.general.filetree
+  - community.general.filesystem
   - community.general.flattened
   - community.general.hiera
   - community.general.keyring
@@ -472,3 +473,6 @@ other:
   - hashivault_secret_engine
   - hashivault_auth_method
   - hashivault_policy
+
+kolla:
+  - kolla_toolbox

@@ -141,6 +141,7 @@ utils:
 community.crypto:
   - community.crypto.openssl_privatekey
   - community.crypto.openssl_csr_pipe
+  - community.crypto.x509_certificate
   - community.crypto.x509_certificate_pipe
 
 community.docker:

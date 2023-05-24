@@ -14,7 +14,7 @@
 
 - name: Install ansible-lint
   ansible.builtin.pip:
-    name: ansible-lint
+    name: ansible-lint!=6.16.2
     executable: pip3
 
 - name: Create .ansible-lint-rules directory

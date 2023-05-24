@@ -12,7 +12,7 @@
   ansible.builtin.find:
     paths: "{{ zuul_work_dir }}"
     pattern: "Containerfile*,Dockerfile*"
-  register: files
+  register: hadolint_files
 
 - name: Run hadolint
   ansible.builtin.shell:
@@ -22,5 +22,5 @@
       /usr/local/bin/hadolint {{ item|relpath(zuul_work_dir) }} 2>&1 | tee -a hadolint.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  loop: "{{ files.files|map(attribute='path')|list }}"
+  loop: "{{ hadolint_files.files|map(attribute='path')|list }}"
   changed_when: false

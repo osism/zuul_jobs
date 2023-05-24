@@ -1,5 +1,5 @@
 ---
-dco_license_failure: |
+dcolicense_failure: |
   One or more commits have not been signed properly using --signoff.
 
   The meaning of a signoff depends on the project, but it typically certifies

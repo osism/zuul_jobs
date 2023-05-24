@@ -38,5 +38,4 @@
   ansible.builtin.command:
     cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R -r {{ zuul_work_dir }}/.ansible-lint-rules"
     chdir: "{{ zuul_work_dir }}"
-  register: ansible_lint_output
   changed_when: false

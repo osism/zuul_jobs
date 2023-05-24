@@ -2,7 +2,7 @@
 - name: Developer Certificate of Origin (DCO) license check
   ansible.builtin.shell:
     cmd: |
-      set -e
+      set -eo pipefail
       result=0
       for commit in $(git cherry -v origin/{{ zuul.branch }} HEAD | cut -d " " -f2)
       do
@@ -17,11 +17,11 @@
       exit $result      
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  register: _dco
-  failed_when: _dco.rc > 1
+  register: dcolicense_status
+  failed_when: dcolicense_status.rc > 1
   changed_when: false
 
 - name: License check failed
   ansible.builtin.fail:
-    msg: "{{ dco_license_failure }}"
-  when: _dco.rc != 0
+    msg: "{{ dcolicense_failure }}"
+  when: dcolicense_status.rc != 0

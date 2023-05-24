@@ -16,7 +16,7 @@
   ansible.builtin.find:
     paths: "{{ zuul_work_dir }}"
     pattern: "*.py"
-  register: py_files
+  register: flake8_py_files
 
 - name: Run flake8
   ansible.builtin.shell:
@@ -26,7 +26,7 @@
       python3 -m flake8 {{ file|relpath(zuul_work_dir) }} 2>&1 | tee -a flake8.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  loop: "{{ py_files.files|map(attribute='path')|list }}"
+  loop: "{{ flake8_py_files.files|map(attribute='path')|list }}"
   loop_control:
     loop_var: file
   changed_when: false

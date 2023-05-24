@@ -16,7 +16,7 @@
   ansible.builtin.find:
     paths: "{{ zuul_work_dir }}"
     pattern: "*.yml,*.yaml"
-  register: yaml_files
+  register: yamllint_files
 
 - name: Run yamllint
   ansible.builtin.shell:
@@ -26,7 +26,7 @@
       python3 -m yamllint {{ file|relpath(zuul_work_dir) }} 2>&1 | tee -a yamllint.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  loop: "{{ yaml_files.files|map(attribute='path')|list }}"
+  loop: "{{ yamllint_files.files|map(attribute='path')|list }}"
   loop_control:
     loop_var: file
   changed_when: false

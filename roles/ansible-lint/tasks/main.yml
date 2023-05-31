@@ -17,6 +17,11 @@
     name: ansible-lint!=6.16.2
     executable: pip3
 
+- name: Install jmespath
+  ansible.builtin.pip:
+    name: jmespath
+    executable: pip3
+
 - name: Create .ansible-lint-rules directory
   ansible.builtin.file:
     path: "{{ zuul_work_dir }}/.ansible-lint-rules"

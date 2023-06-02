@@ -14,7 +14,7 @@
 
 - name: Install ansible-lint
   ansible.builtin.pip:
-    name: ansible-lint!=6.16.2
+    name: ansible-lint==6.16.1
     executable: pip3
 
 - name: Install jmespath

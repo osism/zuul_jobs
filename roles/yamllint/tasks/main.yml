@@ -23,10 +23,10 @@
     cmd: |
       set -o pipefail
       set -e
-      python3 -m yamllint {{ file|relpath(zuul_work_dir) }} 2>&1 | tee -a yamllint.txt
+      python3 -m yamllint {{ file | relpath(zuul_work_dir) }} 2>&1 | tee -a yamllint.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  loop: "{{ yamllint_files.files|map(attribute='path')|list }}"
+  loop: "{{ yamllint_files.files | map(attribute='path') | list }}"
   loop_control:
     loop_var: file
   changed_when: false

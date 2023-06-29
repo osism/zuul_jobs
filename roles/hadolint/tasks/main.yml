@@ -19,8 +19,8 @@
     cmd: |
       set -o pipefail
       set -e
-      /usr/local/bin/hadolint {{ item|relpath(zuul_work_dir) }} 2>&1 | tee -a hadolint.txt
+      /usr/local/bin/hadolint {{ item | relpath(zuul_work_dir) }} 2>&1 | tee -a hadolint.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  loop: "{{ hadolint_files.files|map(attribute='path')|list }}"
+  loop: "{{ hadolint_files.files | map(attribute='path') | list }}"
   changed_when: false

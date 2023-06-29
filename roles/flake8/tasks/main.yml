@@ -23,10 +23,10 @@
     cmd: |
       set -o pipefail
       set -e
-      python3 -m flake8 {{ file|relpath(zuul_work_dir) }} 2>&1 | tee -a flake8.txt
+      python3 -m flake8 {{ file | relpath(zuul_work_dir) }} 2>&1 | tee -a flake8.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
-  loop: "{{ flake8_py_files.files|map(attribute='path')|list }}"
+  loop: "{{ flake8_py_files.files | map(attribute='path') | list }}"
   loop_control:
     loop_var: file
   changed_when: false

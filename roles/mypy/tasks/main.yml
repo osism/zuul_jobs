@@ -1,0 +1,25 @@
+---
+# tasks file for mypy
+- name: Install python
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
+- name: Install mypy
+  ansible.builtin.pip:
+    name: mypy
+    executable: pip3
+
+- name: Install repo requirements
+  ansible.builtin.pip:
+    requirements: "requirements.txt"
+    executable: pip3
+    chdir: "{{ zuul_work_dir }}"
+
+- name: Run mypy
+  ansible.builtin.command:
+    cmd: "python3 -m mypy --ignore-missing-imports --install-types --non-interactive ."
+    chdir: "{{ zuul_work_dir }}"
+  changed_when: false

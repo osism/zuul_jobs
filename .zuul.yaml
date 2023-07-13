@@ -20,6 +20,10 @@
     run: playbooks/hadolint/run.yaml
 
 - job:
+    name: mypy
+    run: playbooks/mypy/run.yaml
+
+- job:
     name: yamllint
     run: playbooks/yamllint/run.yaml
 

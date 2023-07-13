@@ -1,0 +1,5 @@
+---
+- name: Mypy
+  hosts: all
+  roles:
+    - mypy

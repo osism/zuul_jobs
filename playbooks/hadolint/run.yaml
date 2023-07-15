@@ -1,5 +1,5 @@
 ---
-- name: Hadolint
+- name: hadolint
   hosts: all
   roles:
     - hadolint

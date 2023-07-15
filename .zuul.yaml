@@ -12,6 +12,10 @@
     run: playbooks/devstack/run.yaml
 
 - job:
+    name: ensure-buildah
+    run: playbooks/ensure-buildah/run.yaml
+
+- job:
     name: flake8
     run: playbooks/flake8/run.yaml
 

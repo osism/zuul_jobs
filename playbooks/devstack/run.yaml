@@ -1,5 +1,5 @@
 ---
-- name: Devstack
+- name: devstack
   hosts: all
   roles:
     - devstack

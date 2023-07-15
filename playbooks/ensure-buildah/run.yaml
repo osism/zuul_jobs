@@ -1,0 +1,5 @@
+---
+- name: ensure-buildah
+  hosts: all
+  roles:
+    - ensure-buildah

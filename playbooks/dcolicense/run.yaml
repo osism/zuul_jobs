@@ -1,5 +1,5 @@
 ---
-- name: Dco License
+- name: dcolicense
   hosts: all
   roles:
     - dcolicense

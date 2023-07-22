@@ -1,5 +1,5 @@
 ---
-- name: Mypy
+- name: Run mypy
   hosts: all
   roles:
     - mypy

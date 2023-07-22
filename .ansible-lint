@@ -12,4 +12,3 @@ skip_list:
 # If this isn't there our custom rules will only through a warning and wont generate a failure!:
 warn_list:
   - dummy
-

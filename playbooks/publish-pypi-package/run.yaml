@@ -1,5 +1,5 @@
 ---
-- name: Python-package-build
+- name: Run python-package-build
   hosts: all
   roles:
     - python-package-build

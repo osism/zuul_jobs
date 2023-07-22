@@ -1,5 +1,5 @@
 ---
-- name: Flake8
+- name: Run flake8
   hosts: all
   roles:
     - flake8

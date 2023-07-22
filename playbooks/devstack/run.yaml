@@ -1,5 +1,5 @@
 ---
-- name: Devstack
+- name: Run devstack
   hosts: all
   roles:
     - devstack

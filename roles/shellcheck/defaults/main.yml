@@ -1,0 +1,4 @@
+---
+# defaults file for shellcheck
+zuul_work_dir: "{{ zuul.project.src_dir }}"
+exclude_rules: ""

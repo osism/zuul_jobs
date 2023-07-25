@@ -1,0 +1,73 @@
+# The source of this code is refactored from: https://github.com/ludeeus/action-shellcheck/blob/master/action.yaml#L146-L221
+# It contains this license: https://github.com/ludeeus/action-shellcheck/blob/master/LICENSE
+
+#!/usr/bin/env bash
+set -e
+set -x
+set -f
+
+INPUT_SCANDIR="{{ zuul_work_dir }}"
+INPUT_CHECK_TOGETHER="false"
+INPUT_EXCLUDE_ARGS=""
+INPUT_ADDITIONAL_FILE_ARGS=""
+INPUT_SHELLCHECK_OPTIONS="{{ exclude_rules }}"
+
+statuscode=0
+declare -a filepaths
+shebangregex="^#! */[^ ]*/(env *)?[abk]*sh"
+
+while IFS= read -r -d '' file; do
+  filepaths+=("$file")
+done < <(find "${INPUT_SCANDIR}" \
+    -type f '(' \
+    -name '*.bash' \
+    -o -name '.bashrc' \
+    -o -name 'bashrc' \
+    -o -name '.bash_aliases' \
+    -o -name '.bash_completion' \
+    -o -name '.bash_login' \
+    -o -name '.bash_logout' \
+    -o -name '.bash_profile' \
+    -o -name 'bash_profile' \
+    -o -name '*.ksh' \
+    -o -name 'suid_profile' \
+    -o -name '*.zsh' \
+    -o -name '.zlogin' \
+    -o -name 'zlogin' \
+    -o -name '.zlogout' \
+    -o -name 'zlogout' \
+    -o -name '.zprofile' \
+    -o -name 'zprofile' \
+    -o -name '.zsenv' \
+    -o -name 'zsenv' \
+    -o -name '.zshrc' \
+    -o -name 'zshrc' \
+    -o -name '*.sh' \
+    -o -path '*/.profile' \
+    -o -path '*/profile' \
+    -o -name '*.shlib' ')' \
+    -print0)
+
+while IFS= read -r -d '' file; do
+  head -n1 "$file" | grep -Eqs "$shebangregex" || continue
+  filepaths+=("$file")
+done < <(find "${INPUT_SCANDIR}" \
+    ${INPUT_EXCLUDE_ARGS} \
+    -type f ! -name '*.*' -perm /111 \
+    -print0)
+
+if [[ -n "${INPUT_CHECK_TOGETHER}" ]]; then
+  shellcheck \
+    ${INPUT_SHELLCHECK_OPTIONS} \  # must be without quotas. With quotas and defined rules all checks are disabled.
+    "${filepaths[@]}" || statuscode=$?
+else
+  for file in "${filepaths[@]}"; do
+    shellcheck \
+      ${INPUT_SHELLCHECK_OPTIONS} \
+      "$file" || statuscode=$?
+  done
+fi
+
+echo "statuscode=$statuscode"
+
+set +f

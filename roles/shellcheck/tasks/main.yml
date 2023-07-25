@@ -1,0 +1,25 @@
+---
+# tasks file for shellcheck
+- name: Ensure shellcheck is installed
+  ansible.builtin.package:
+    name: shellcheck
+    state: present
+
+- name: Copy check-shellscripts.sh
+  ansible.builtin.template:
+    src: check-shellscripts.sh.j2
+    dest: "{{ zuul_work_dir }}/check-shellscripts.sh"
+    mode: "0755"
+
+- name: Run check-shellscripts.sh  # noqa: var-naming[no-role-prefix]
+  become: true
+  ansible.builtin.command: "./check-shellscripts.sh"
+  args:
+    chdir: "{{ zuul_work_dir }}"
+  register: result
+  changed_when: true
+
+- name: Output from the script
+  ansible.builtin.debug:
+    msg: "{{ result.stdout }}"
+  failed_when: result.stdout_lines|length > 1

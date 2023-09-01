@@ -1,26 +1,32 @@
 ---
 - job: 
     name: ansible-lint
+    description: ansible-lint job provided by OSISM
     run: playbooks/ansible-lint/run.yaml
 
 - job:
     name: dcolicense
+    description: dcolicense job provided by OSISM
     run: playbooks/dcolicense/run.yaml
 
 - job:
     name: devstack
+    description: devstack job provided by OSISM
     run: playbooks/devstack/run.yaml
 
 - job:
     name: flake8
+    description: flake8 job provided by OSISM
     run: playbooks/flake8/run.yaml
 
 - job:
     name: hadolint
+    description: hadolint job provided by OSISM
     run: playbooks/hadolint/run.yaml
 
 - job:
     name: mypy
+    description: mypy job provided by OSISM
     run: playbooks/mypy/run.yaml
 
 - job:
@@ -31,6 +37,7 @@
 
 - job:
     name: yamllint
+    description: yamllint job provided by OSISM
     run: playbooks/yamllint/run.yaml
 
 - project:

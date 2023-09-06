@@ -1,0 +1,9 @@
+---
+- name: Publish-pypi-package
+  hosts: all
+  roles:
+    - upload-pypi
+  vars:
+    pypi_info:
+      api_token: "{{ secret.PYPI_API_TOKEN }}"
+    pypi_path: "{{ zuul_work_dir }}/dist"

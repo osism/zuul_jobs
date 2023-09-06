@@ -24,6 +24,12 @@
     run: playbooks/mypy/run.yaml
 
 - job:
+    name: publish-pypi-package
+    pre-run: playbooks/publish-pypi-package/pre-run.yaml
+    run: playbooks/publish-pypi-package/run.yaml
+    post-run: playbooks/publish-pypi-package/post-run.yaml
+
+- job:
     name: yamllint
     run: playbooks/yamllint/run.yaml
 

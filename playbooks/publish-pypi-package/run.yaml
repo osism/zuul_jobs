@@ -1,0 +1,5 @@
+---
+- name: Python-package-build
+  hosts: all
+  roles:
+    - python-package-build

@@ -1,0 +1,12 @@
+# tasks file for python-package-build
+- name: Build Python package
+  ansible.builtin.command:
+    cmd: "{{ python_venv_dir }}/bin/python3 -m build --sdist --wheel --outdir dist/ ."
+    chdir: "{{ zuul_work_dir }}"
+  changed_when: false
+
+- name: Check package metadata
+  ansible.builtin.command:
+    cmd: "{{ python_venv_dir }}/bin/python3 -m twine check dist/*"
+    chdir: "{{ zuul_work_dir }}"
+  changed_when: false

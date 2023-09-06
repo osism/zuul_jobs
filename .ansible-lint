@@ -1,6 +1,7 @@
 ---
 exclude_paths:
   - .github/
+  - playbooks/publish-pypi-package/post-run.yaml
 use_default_rules: true
 rulesdir:
   - ./.ansible-lint-rules/

@@ -1,0 +1,16 @@
+# tasks file for prepare-package-build
+- name: Install Python
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
+- name: Install pip modules
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: 'python3 -m venv'
+  loop:
+    - build
+    - twine

@@ -1,0 +1,5 @@
+---
+- name: Prepare-package-build
+  hosts: all
+  roles:
+    - prepare-package-build

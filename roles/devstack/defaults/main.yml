@@ -3,7 +3,7 @@
 zuul_work_dir: "{{ zuul.project.src_dir }}"
 
 # OpenStack release to use
-devstack_release: "stable/zed"
+devstack_release: "stable/2023.1"
 
 # Password for services, rabbitmq, database, ..
 devstack_password: password

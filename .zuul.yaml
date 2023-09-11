@@ -5,6 +5,11 @@
     run: playbooks/ansible-lint/run.yaml
 
 - job:
+    name: ansible-molecule
+    description: ansible-molecule job provided by OSISM
+    run: playbooks/ansible-molecule/run.yaml
+
+- job:
     name: dcolicense
     description: dcolicense job provided by OSISM
     run: playbooks/dcolicense/run.yaml

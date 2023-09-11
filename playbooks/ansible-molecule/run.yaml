@@ -1,0 +1,5 @@
+---
+- name: Run ansible-molecule
+  hosts: all
+  roles:
+    - ansible-molecule

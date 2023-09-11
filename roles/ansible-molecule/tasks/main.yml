@@ -1,0 +1,34 @@
+---
+# tasks file for ansible_molecule
+- name: Install python
+  ansible.builtin.include_role:
+    name: "{{ item }}"
+  loop:
+    - ensure-python
+    - ensure-pip
+
+- name: Install ansible
+  ansible.builtin.pip:
+    name: "ansible=={{ ansible_molecule_ansible_version }}"
+    virtualenv: "{{ ansible_molecule_venv }}"
+    virtualenv_command: 'python3 -m venv'
+
+- name: Install requirements
+  ansible.builtin.pip:
+    virtualenv: "{{ ansible_molecule_venv }}"
+    virtualenv_command: 'python3 -m venv'
+    requirements: "molecule/requirements.txt"
+    chdir: "{{ zuul_work_dir }}"
+
+- name: Run ansible-molecule
+  ansible.builtin.shell:
+    cmd: |
+      set -e
+      . "{{ ansible_molecule_venv }}"/bin/activate
+      python -m molecule --debug -v test -s delegated
+      python -m molecule --debug -v destroy -s delegated
+    chdir: "{{ zuul_work_dir }}"
+    executable: /bin/bash
+  environment:
+    ANSIBLE_ROLE: "{{ ansible_role }}"
+  changed_when: true

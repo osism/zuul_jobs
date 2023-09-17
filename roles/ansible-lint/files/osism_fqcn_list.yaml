@@ -1,5 +1,6 @@
 ---
 builtin:
+  - block
   - ansible.builtin.add_host
   - ansible.builtin.apt
   - ansible.builtin.apt_key
@@ -274,6 +275,8 @@ community.general:
   - community.general.git_config  # Deprecated
   - community.general.ini_file  # not longer in the official list, but still in use
   - community.general.timezone  # not longer in the official list, but still in use
+  - community.general.lvol
+  - community.general.lvg
 
 community.hashi_vault:
   - community.hashi_vault.vault_kv1_get

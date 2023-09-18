@@ -31,6 +31,7 @@
 
 - job:
     name: publish-pypi-package
+    description: publish-pypi-package job provided by OSISM
     pre-run: playbooks/publish-pypi-package/pre-run.yaml
     run: playbooks/publish-pypi-package/run.yaml
     post-run: playbooks/publish-pypi-package/post-run.yaml

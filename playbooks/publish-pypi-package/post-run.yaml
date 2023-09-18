@@ -6,4 +6,4 @@
   vars:
     pypi_info:
       api_token: "{{ secret.PYPI_API_TOKEN }}"
-    pypi_path: "{{ zuul_work_dir }}/dist"
+    pypi_path: "{{ zuul.project.src_dir }}/dist"

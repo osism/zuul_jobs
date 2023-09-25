@@ -10,6 +10,11 @@
     run: playbooks/ansible-molecule/run.yaml
 
 - job:
+    name: check-shell-syntax
+    description: check-shell-syntax job provided by OSISM
+    run: playbooks/check-shell-syntax/run.yaml
+
+- job:
     name: dcolicense
     description: dcolicense job provided by OSISM
     run: playbooks/dcolicense/run.yaml

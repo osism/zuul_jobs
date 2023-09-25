@@ -1,4 +1,4 @@
 ---
 # defaults file for python-package-build
 zuul_work_dir: "{{ zuul.project.src_dir }}"
-python_venv_dir: "/tmp/venv"
+python_venv_dir: "$HOME/venv"

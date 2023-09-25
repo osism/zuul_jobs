@@ -1,0 +1,121 @@
+---
+# tasks file for check-shell-syntax
+- name: Download shellcheck
+  ansible.builtin.shell:
+    cmd: |
+      mkdir -p "{{ check_shell_install_path }}"
+
+      baseurl="https://github.com/koalaman/shellcheck/releases/download"
+
+      curl -Lso "{{ check_shell_install_path }}/sc.tar.xz" \
+        "${baseurl}/{{ check_shell_version }}/shellcheck-{{ check_shell_version }}.linux.x86_64.tar.xz"
+
+      tar -xf "{{ check_shell_install_path }}/sc.tar.xz" -C "{{ check_shell_install_path }}"
+      mv "{{ check_shell_install_path }}/shellcheck-{{ check_shell_version }}/shellcheck" \
+        "{{ check_shell_install_path }}/shellcheck"
+    executable: /bin/bash
+  changed_when: true
+
+- name: Display shellcheck version
+  ansible.builtin.shell:
+    cmd: |
+      "{{ check_shell_install_path }}/shellcheck" --version
+    executable: /bin/bash
+  changed_when: false
+
+- name: Run the check
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+
+      statuscode=0
+      set -f # temporarily disable globbing so that globs in input aren't expanded
+
+      declare -a excludes
+
+      excludes+=("! -path *./.git/*")
+
+      if [[ -n "{{ check_shell_ignore_paths }}" ]]; then
+        for path in "{{ check_shell_ignore_paths }}"; do
+          excludes+=("! -path *./$path/*")
+          excludes+=("! -path */$path/*")
+          excludes+=("! -path $path")
+        done
+      fi
+
+      if [[ -n "{{ check_shell_ignore_names }}" ]]; then
+        for name in "{{ check_shell_ignore_names }}"; do
+          excludes+=("! -name $name")
+        done
+      fi
+
+      echo "excludes=${excludes[@]}"
+
+      declare -a files
+
+      if [[ -n "{{ check_shell_additional_files }}" ]]; then
+        for file in "{{ check_shell_additional_files }}"; do
+          files+=("-o -name *$file")
+        done
+      fi
+
+      echo "files=${files[@]}"
+
+      declare -a filepaths
+      shebangregex="^#! */[^ ]*/(env *)?[abk]*sh"
+
+      while IFS= read -r -d '' file; do
+        filepaths+=("$file")
+      done < <(find "{{ check_shell_scan_dir }}" \
+          ${excludes} \
+          -type f \
+          '(' \
+          -name '*.bash' \
+          -o -name '.bashrc' \
+          -o -name 'bashrc' \
+          -o -name '.bash_aliases' \
+          -o -name '.bash_completion' \
+          -o -name '.bash_login' \
+          -o -name '.bash_logout' \
+          -o -name '.bash_profile' \
+          -o -name 'bash_profile' \
+          -o -name '*.ksh' \
+          -o -name 'suid_profile' \
+          -o -name '*.zsh' \
+          -o -name '.zlogin' \
+          -o -name 'zlogin' \
+          -o -name '.zlogout' \
+          -o -name 'zlogout' \
+          -o -name '.zprofile' \
+          -o -name 'zprofile' \
+          -o -name '.zsenv' \
+          -o -name 'zsenv' \
+          -o -name '.zshrc' \
+          -o -name 'zshrc' \
+          -o -name '*.sh' \
+          -o -path '*/.profile' \
+          -o -path '*/profile' \
+          -o -name '*.shlib' \
+          ${files} \
+          ')' \
+          -print0)
+
+      while IFS= read -r -d '' file; do
+        head -n1 "$file" | grep -Eqs "$shebangregex" || continue
+        filepaths+=("$file")
+      done < <(find "{{ check_shell_scan_dir }}" \
+          -type f ! -name '*.*' -perm /111 \
+          -print0)
+
+      for file in "${filepaths[@]}"; do
+        "{{ check_shell_install_path }}/shellcheck" \
+          --format={{ check_shell_format }} \
+          "$file" || statuscode=$?
+      done
+
+      echo "filepaths=${filepaths[@]}"
+
+      exit $statuscode
+    executable: /bin/bash
+    chdir: "{{ zuul_work_dir }}"
+  changed_when: true

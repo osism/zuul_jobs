@@ -1,0 +1,10 @@
+---
+# defaults file for check-shell-syntax
+zuul_work_dir: "{{ zuul.project.src_dir }}"
+check_shell_install_path: "$HOME/shellcheck"
+check_shell_version: "stable"
+check_shell_scan_dir: "."
+check_shell_format: "gcc"
+check_shell_ignore_paths: ""
+check_shell_ignore_names: ""
+check_shell_additional_files: ""

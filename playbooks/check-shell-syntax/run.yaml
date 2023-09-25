@@ -1,0 +1,5 @@
+---
+- name: Run check-shell-syntax
+  hosts: all
+  roles:
+    - check-shell-syntax

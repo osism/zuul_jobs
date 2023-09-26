@@ -16,6 +16,7 @@
   ansible.builtin.find:
     paths: "{{ zuul_work_dir }}"
     pattern: "*.py"
+    recurse: true
   register: flake8_py_files
 
 - name: Run flake8

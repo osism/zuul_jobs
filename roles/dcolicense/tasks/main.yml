@@ -14,7 +14,7 @@
           result=1
         fi
       done
-      exit $result      
+      exit $result
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
   register: dcolicense_status

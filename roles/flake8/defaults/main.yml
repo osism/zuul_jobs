@@ -1,3 +1,4 @@
 ---
 # defaults file for flake8
 zuul_work_dir: "{{ zuul.project.src_dir }}"
+flake8_excludes: [""]

@@ -16,6 +16,7 @@
   ansible.builtin.find:
     paths: "{{ zuul_work_dir }}"
     pattern: "*.py"
+    excludes: "{{ flake8_excludes }}"
     recurse: true
   register: flake8_py_files
 

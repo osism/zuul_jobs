@@ -1,3 +1,4 @@
+---
 # tasks file for python-package-build
 - name: Build Python package
   ansible.builtin.command:

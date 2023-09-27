@@ -16,6 +16,7 @@
   ansible.builtin.find:
     paths: "{{ zuul_work_dir }}"
     pattern: "*.yml,*.yaml"
+    excludes: "{{ yamllint_excludes }}"
     recurse: true
   register: yamllint_files
 

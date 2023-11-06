@@ -47,6 +47,11 @@
     post-run: playbooks/publish-pypi-package/post-run.yaml
 
 - job:
+    name: python-black
+    description: python-black job provided by OSISM
+    run: playbooks/python-black/run.yml
+
+- job:
     name: yamllint
     description: yamllint job provided by OSISM
     run: playbooks/yamllint/run.yaml

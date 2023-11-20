@@ -1,6 +1,5 @@
 ---
 builtin:
-  - block
   - ansible.builtin.add_host
   - ansible.builtin.apt
   - ansible.builtin.apt_key
@@ -140,10 +139,7 @@ utils:
   - ansible.utils.validate
 
 community.crypto:
-  - community.crypto.openssl_privatekey
-  - community.crypto.openssl_csr_pipe
-  - community.crypto.x509_certificate
-  - community.crypto.x509_certificate_pipe
+  - community.crypto.openssh_keypair
 
 community.docker:
   - community.docker.current_container_facts
@@ -181,102 +177,100 @@ community.docker:
   - community.docker.docker_swarm
 
 community.general:
-  - community.general.doas
-  - community.general.dzdo
-  - community.general.ksu
-  - community.general.machinectl
-  - community.general.pbrun
-  - community.general.pfexec
-  - community.general.pmrun
-  - community.general.sesu
-  - community.general.sudosu
-  - community.general.memcached
-  - community.general.pickle
-  - community.general.redis
-  - community.general.yaml
+  - community.general.cartesian
   - community.general.cgroup_memory_recap
+  - community.general.chef_databag
+  - community.general.chroot
+  - community.general.cobbler
+  - community.general.collection_version
+  - community.general.consul_kv
   - community.general.context_demo
   - community.general.counter_enabled
+  - community.general.credstash
+  - community.general.cyberarkpassword
   - community.general.dense
+  - community.general.dependent
+  - community.general.dig
   - community.general.diy
+  - community.general.dnstxt
+  - community.general.doas
+  - community.general.dsv
+  - community.general.dzdo
   - community.general.elastic
+  - community.general.etcd
+  - community.general.etcd3
+  - community.general.filesystem
+  - community.general.filetree
+  - community.general.flattened
+  - community.general.funcd
+  - community.general.git_config
+  - community.general.gitlab_runners
+  - community.general.hiera
   - community.general.hipchat
+  - community.general.icinga2
+  - community.general.ini_file
+  - community.general.iocage
   - community.general.jabber
+  - community.general.jail
+  - community.general.keyring
+  - community.general.ksu
+  - community.general.lastpass
+  - community.general.linode
+  - community.general.lmdb_kv
   - community.general.log_plays
   - community.general.loganalytics
   - community.general.logdna
   - community.general.logentries
   - community.general.logstash
-  - community.general.mail
-  - community.general.nrdp
-  - community.general.null
-  - community.general.opentelemetry
-  - community.general.say
-  - community.general.selective
-  - community.general.slack
-  - community.general.splunk
-  - community.general.sumologic
-  - community.general.syslog_json
-  - community.general.unixy
-  - community.general.yaml
-  - community.general.chroot
-  - community.general.funcd
-  - community.general.iocage
-  - community.general.jail
   - community.general.lxc
   - community.general.lxd
-  - community.general.qubes
-  - community.general.saltstack
-  - community.general.zone
-  - community.general.cobbler
-  - community.general.gitlab_runners
-  - community.general.icinga2
-  - community.general.linode
   - community.general.lxd
-  - community.general.nmap
-  - community.general.online
-  - community.general.opennebula
-  - community.general.proxmox
-  - community.general.scaleway
-  - community.general.stackpath_compute
-  - community.general.virtualbox
-  - community.general.xen_orchestra
-  - community.general.cartesian
-  - community.general.chef_databag
-  - community.general.collection_version
-  - community.general.consul_kv
-  - community.general.credstash
-  - community.general.cyberarkpassword
-  - community.general.dependent
-  - community.general.dig
-  - community.general.dnstxt
-  - community.general.dsv
-  - community.general.etcd
-  - community.general.etcd3
-  - community.general.filetree
-  - community.general.filesystem
-  - community.general.flattened
-  - community.general.hiera
-  - community.general.keyring
-  - community.general.lastpass
-  - community.general.lmdb_kv
+  - community.general.machinectl
+  - community.general.mail
   - community.general.manifold
+  - community.general.memcached
+  - community.general.modprobe
+  - community.general.nmap
+  - community.general.nrdp
+  - community.general.null
   - community.general.onepassword
   - community.general.onepassword_raw
+  - community.general.online
+  - community.general.opennebula
+  - community.general.opentelemetry
+  - community.general.pam_limits
   - community.general.passwordstore
+  - community.general.pbrun
+  - community.general.pfexec
+  - community.general.pickle
+  - community.general.pmrun
+  - community.general.proxmox
+  - community.general.qubes
   - community.general.random_pet
   - community.general.random_string
   - community.general.random_words
   - community.general.redis
+  - community.general.redis
   - community.general.revbitspss
+  - community.general.saltstack
+  - community.general.say
+  - community.general.scaleway
+  - community.general.selective
+  - community.general.sesu
   - community.general.shelvefile
+  - community.general.slack
+  - community.general.splunk
+  - community.general.stackpath_compute
+  - community.general.sudosu
+  - community.general.sumologic
+  - community.general.syslog_json
+  - community.general.timezone
   - community.general.tss
-  - community.general.modprobe  # ansible-devel-version
-  - community.general.git_config  # Deprecated
-  - community.general.ini_file  # not longer in the official list, but still in use
-  - community.general.timezone  # not longer in the official list, but still in use
-  - community.general.lvol
-  - community.general.lvg
+  - community.general.unixy
+  - community.general.virtualbox
+  - community.general.xen_orchestra
+  - community.general.yaml
+  - community.general.zone
 
 community.hashi_vault:
   - community.hashi_vault.vault_kv1_get
@@ -482,6 +476,11 @@ other:
   - hashivault_secret_engine
   - hashivault_auth_method
   - hashivault_policy
+
+ansible:
+  - always
+  - block
+  - rescue
 
 kolla:
   - kolla_toolbox

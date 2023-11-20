@@ -138,6 +138,9 @@ utils:
   - ansible.utils.to_paths
   - ansible.utils.validate
 
+community.crypto:
+  - community.crypto.openssh_keypair
+
 community.docker:
   - community.docker.current_container_facts
   - community.docker.docker_compose
@@ -266,7 +269,6 @@ community.general:
   - community.general.unixy
   - community.general.virtualbox
   - community.general.xen_orchestra
-  - community.general.yaml
   - community.general.yaml
   - community.general.zone
 

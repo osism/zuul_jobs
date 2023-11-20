@@ -140,6 +140,10 @@ utils:
 
 community.crypto:
   - community.crypto.openssh_keypair
+  - community.crypto.openssl_csr_pipe
+  - community.crypto.openssl_privatekey
+  - community.crypto.x509_certificate
+  - community.crypto.x509_certificate_pipe
 
 community.docker:
   - community.docker.current_container_facts

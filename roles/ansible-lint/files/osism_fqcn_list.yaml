@@ -226,6 +226,8 @@ community.general:
   - community.general.logdna
   - community.general.logentries
   - community.general.logstash
+  - community.general.lvg
+  - community.general.lvol
   - community.general.lxc
   - community.general.lxd
   - community.general.lxd

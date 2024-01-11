@@ -476,6 +476,9 @@ openstack.cloud:
   - openstack.cloud.volume_snapshot_info
   - openstack.cloud.openstack
 
+kubernetes.core:
+  - kubernetes.core.k8s
+
 other:
   - scan_services
   - hashivault_secret

@@ -41,6 +41,6 @@
 
 - name: Run ansible-lint
   ansible.builtin.command:
-    cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R -r {{ zuul_work_dir }}/.ansible-lint-rules"
+    cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R -r .ansible-lint-rules --exclude .zuul.yaml"
     chdir: "{{ zuul_work_dir }}"
   changed_when: false

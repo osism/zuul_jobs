@@ -1,5 +1,4 @@
 ---
-# tasks for ansible-lint
 - name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"
@@ -22,17 +21,28 @@
     name: jmespath
     executable: pip3
 
+- name: Install HiYaPyCo
+  ansible.builtin.pip:
+    name: HiYaPyCo
+    executable: pip3
+
+- name: Prepare .ansible-lint configuration file
+  ansible.builtin.script:
+    cmd: "files/prepare-dot-ansible-lint.py {{ ansible_user_dir }}/src/github.com/osism/zuul-jobs"
+    executable: /usr/bin/python3
+    chdir: "{{ ansible_user_dir }}/{{ zuul_work_dir }}"
+
 - name: Create .ansible-lint-rules directory
   ansible.builtin.file:
     path: "{{ zuul_work_dir }}/.ansible-lint-rules"
     state: directory
-    mode: '0755'
+    mode: 0755
 
-- name: Copy OSISM specific ansible lint rules to .ansible-lint-rules directory
+- name: Copy ansible lint rules to .ansible-lint-rules directory
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ zuul_work_dir }}/.ansible-lint-rules/{{ item }}"
-    mode: '0644'
+    mode: 0644
   loop:
     - osism_attribute_order.py
     - osism_attribute_order_list.yaml
@@ -41,6 +51,6 @@
 
 - name: Run ansible-lint
   ansible.builtin.command:
-    cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R -r .ansible-lint-rules --exclude .zuul.yaml"
+    cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R"
     chdir: "{{ zuul_work_dir }}"
   changed_when: false

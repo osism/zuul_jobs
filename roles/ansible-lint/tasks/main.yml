@@ -26,9 +26,15 @@
     name: HiYaPyCo
     executable: pip3
 
+- name: Copy default .ansible-lint configuration file
+  ansible.builtin.copy:
+    src: defaults-dot-ansible-lint
+    dest: /tmp/defaults-dot-ansible-lint
+    mode: 0644
+
 - name: Prepare .ansible-lint configuration file
   ansible.builtin.script:
-    cmd: "files/prepare-dot-ansible-lint.py {{ ansible_user_dir }}/src/github.com/osism/zuul-jobs"
+    cmd: "files/prepare-dot-ansible-lint.py /tmp/defaults-dot-ansible-lint"
     executable: /usr/bin/python3
     chdir: "{{ ansible_user_dir }}/{{ zuul_work_dir }}"
 

@@ -1,15 +1,6 @@
 ---
 exclude_paths:
-  - .github/
   - playbooks/publish-pypi-package/post-run.yaml
-use_default_rules: true
-rulesdir:
-  - ./.ansible-lint-rules/
 skip_list:
   - role-name
   - var-naming[no-role-prefix]
-  - yaml
-# DO NOT DELETE THE WARNLIST! It is required for our custom rules! 
-# If this isn't there our custom rules will only through a warning and wont generate a failure!:
-warn_list:
-  - dummy

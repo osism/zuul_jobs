@@ -2,6 +2,7 @@
 exclude_paths:
   - .github
   - .zuul.yaml
+  - requirements.yml
 use_default_rules: true
 rulesdir:
   - ./.ansible-lint-rules/

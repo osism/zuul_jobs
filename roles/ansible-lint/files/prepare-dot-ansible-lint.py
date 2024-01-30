@@ -4,7 +4,7 @@ import hiyapyco
 
 conf = hiyapyco.load(
     ".ansible-lint",
-    f"{sys.argv[1]}/roles/ansible-lint/files/defaults-dot-ansible-lint",
+    sys.argv[1],
     method=hiyapyco.METHOD_MERGE,
     interpolate=True,
     failonmissingfiles=True,

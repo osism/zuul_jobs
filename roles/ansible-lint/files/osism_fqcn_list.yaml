@@ -246,6 +246,7 @@ community.general:
   - community.general.opennebula
   - community.general.opentelemetry
   - community.general.pam_limits
+  - community.general.pamd
   - community.general.passwordstore
   - community.general.pbrun
   - community.general.pfexec

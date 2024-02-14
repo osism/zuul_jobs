@@ -479,6 +479,7 @@ openstack.cloud:
   - openstack.cloud.openstack
 
 kubernetes.core:
+  - kubernetes.core.helm
   - kubernetes.core.k8s
 
 other:

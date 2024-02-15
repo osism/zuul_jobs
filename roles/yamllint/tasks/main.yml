@@ -1,5 +1,4 @@
 ---
-# tasks file for yamllint
 - name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"
@@ -12,23 +11,12 @@
     name: yamllint
     executable: pip3
 
-- name: Find all .yml and .yaml files
-  ansible.builtin.find:
-    paths: "{{ zuul_work_dir }}"
-    pattern: "*.yml,*.yaml"
-    excludes: "{{ yamllint_excludes }}"
-    recurse: true
-  register: yamllint_files
-
 - name: Run yamllint
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
       set -e
-      python3 -m yamllint {{ file | relpath(zuul_work_dir) }} 2>&1 | tee -a yamllint.txt
-    chdir: "{{ zuul_work_dir }}"
+      python3 -m yamllint . 2>&1 | tee -a yamllint.txt
+    chdir: "{{ zuul.project.src_dir }}"
     executable: /bin/bash
-  loop: "{{ yamllint_files.files | map(attribute='path') | list }}"
-  loop_control:
-    loop_var: file
   changed_when: false

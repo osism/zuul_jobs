@@ -1,4 +1,0 @@
----
-# defaults file for yamllint
-zuul_work_dir: "{{ zuul.project.src_dir }}"
-yamllint_excludes: [""]

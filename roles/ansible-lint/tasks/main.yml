@@ -13,7 +13,7 @@
 
 - name: Install ansible-lint
   ansible.builtin.pip:
-    name: ansible-lint==6.22.2
+    name: "ansible-lint=={{ ansible_lint_version }}"
     executable: pip3
 
 - name: Install jmespath
@@ -36,18 +36,18 @@
   ansible.builtin.script:
     cmd: "files/prepare-dot-ansible-lint.py /tmp/defaults-dot-ansible-lint"
     executable: /usr/bin/python3
-    chdir: "{{ ansible_user_dir }}/{{ zuul_work_dir }}"
+    chdir: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
 
 - name: Create .ansible-lint-rules directory
   ansible.builtin.file:
-    path: "{{ zuul_work_dir }}/.ansible-lint-rules"
+    path: "{{ zuul.project.src_dir }}/.ansible-lint-rules"
     state: directory
     mode: 0755
 
 - name: Copy ansible lint rules to .ansible-lint-rules directory
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{ zuul_work_dir }}/.ansible-lint-rules/{{ item }}"
+    dest: "{{ zuul.project.src_dir }}/.ansible-lint-rules/{{ item }}"
     mode: 0644
   loop:
     - osism_attribute_order.py
@@ -58,5 +58,5 @@
 - name: Run ansible-lint
   ansible.builtin.command:
     cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R"
-    chdir: "{{ zuul_work_dir }}"
+    chdir: "{{ zuul.project.src_dir }}"
   changed_when: false

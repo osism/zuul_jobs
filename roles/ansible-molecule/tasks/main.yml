@@ -1,22 +1,11 @@
 ---
 # tasks file for ansible_molecule
-- name: Install python
-  ansible.builtin.include_role:
-    name: "{{ item }}"
-  loop:
-    - ensure-python
-    - ensure-pip
-
-- name: Install ansible
-  ansible.builtin.pip:
-    name: "ansible=={{ ansible_molecule_ansible_version }}"
-    virtualenv: "{{ ansible_molecule_venv }}"
-    virtualenv_command: 'python3 -m venv'
+- name: Include node specific install tasks
+  ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
 
 - name: Install requirements
   ansible.builtin.pip:
     virtualenv: "{{ ansible_molecule_venv }}"
-    virtualenv_command: 'python3 -m venv'
     requirements: "molecule/requirements.txt"
     chdir: "{{ zuul_work_dir }}"
 

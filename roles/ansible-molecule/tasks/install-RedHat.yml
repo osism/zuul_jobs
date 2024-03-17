@@ -7,7 +7,7 @@
       - python{{ ansible_molecule_python_version_centos }}-pip
     state: present
 
-- name: Install Ansible
+- name: Install Ansible {{ ansible_molecule_ansible_version }}
   ansible.builtin.pip:
     name: "ansible=={{ ansible_molecule_ansible_version }}"
     virtualenv: "{{ ansible_molecule_venv }}"

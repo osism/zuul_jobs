@@ -404,6 +404,7 @@ openstack.cloud:
   - openstack.cloud.baremetal_port
   - openstack.cloud.baremetal_port_info
   - openstack.cloud.catalog_service
+  - openstack.cloud.catalog_service_info
   - openstack.cloud.coe_cluster
   - openstack.cloud.coe_cluster_template
   - openstack.cloud.compute_flavor
@@ -446,6 +447,7 @@ openstack.cloud:
   - openstack.cloud.neutron_rbac_policy
   - openstack.cloud.object
   - openstack.cloud.object_container
+  - openstack.cloud.openstack
   - openstack.cloud.port
   - openstack.cloud.port_info
   - openstack.cloud.project
@@ -477,7 +479,6 @@ openstack.cloud:
   - openstack.cloud.volume_info
   - openstack.cloud.volume_snapshot
   - openstack.cloud.volume_snapshot_info
-  - openstack.cloud.openstack
 
 kubernetes.core:
   - kubernetes.core.helm

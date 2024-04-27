@@ -11,6 +11,16 @@
   ansible.builtin.package:
     name: ansible
 
+- name: Install ansible collections
+  ansible.builtin.command:
+    cmd: "ansible-galaxy collection install {{ item }}"
+  changed_when: false
+  loop:
+    - ansible.posix
+    - community.docker
+    - community.general
+    - kubernetes.core
+
 - name: Install ansible-lint
   ansible.builtin.pip:
     name: "ansible-lint=={{ ansible_lint_version }}"

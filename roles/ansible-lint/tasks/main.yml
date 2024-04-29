@@ -20,6 +20,7 @@
     - community.docker
     - community.general
     - kubernetes.core
+    - openstack.cloud
 
 - name: Install ansible-lint
   ansible.builtin.pip:

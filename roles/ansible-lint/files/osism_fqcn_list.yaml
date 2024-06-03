@@ -223,6 +223,7 @@ community.general:
   - community.general.lastpass
   - community.general.linode
   - community.general.lmdb_kv
+  - community.general.locale_gen
   - community.general.log_plays
   - community.general.loganalytics
   - community.general.logdna

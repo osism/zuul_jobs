@@ -6,14 +6,14 @@
 - name: Install requirements
   ansible.builtin.pip:
     virtualenv: "{{ ansible_molecule_venv }}"
-    requirements: "molecule/requirements.txt"
+    requirements: molecule/requirements.txt
     chdir: "{{ zuul_work_dir }}"
 
 - name: Run molecule dependency action with scenario delegated
   ansible.builtin.shell:
     cmd: |
       set -e
-      . "{{ ansible_molecule_venv }}"/bin/activate
+      . {{ ansible_molecule_venv }}/bin/activate
       python -m molecule --debug -v dependency -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
@@ -25,7 +25,7 @@
   ansible.builtin.shell:
     cmd: |
       set -e
-      . "{{ ansible_molecule_venv }}"/bin/activate
+      . {{ ansible_molecule_venv }}/bin/activate
       python -m molecule --debug -v create -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
@@ -37,7 +37,7 @@
   ansible.builtin.shell:
     cmd: |
       set -e
-      . "{{ ansible_molecule_venv }}"/bin/activate
+      . {{ ansible_molecule_venv }}/bin/activate
       python -m molecule --debug -v prepare -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
@@ -52,7 +52,7 @@
   ansible.builtin.shell:
     cmd: |
       set -e
-      . "{{ ansible_molecule_venv }}"/bin/activate
+      . {{ ansible_molecule_venv }}/bin/activate
       python -m molecule --debug -v converge -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
@@ -64,7 +64,7 @@
   ansible.builtin.shell:
     cmd: |
       set -e
-      . "{{ ansible_molecule_venv }}"/bin/activate
+      . {{ ansible_molecule_venv }}/bin/activate
       python -m molecule --debug -v verify -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
@@ -76,7 +76,7 @@
   ansible.builtin.shell:
     cmd: |
       set -e
-      . "{{ ansible_molecule_venv }}"/bin/activate
+      . {{ ansible_molecule_venv }}/bin/activate
       python -m molecule --debug -v destroy -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash

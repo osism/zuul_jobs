@@ -19,6 +19,7 @@
     executable: /bin/bash
   environment:
     ANSIBLE_ROLE: "{{ ansible_role }}"
+    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
 
 - name: Run molecule create action with scenario delegated
@@ -31,6 +32,7 @@
     executable: /bin/bash
   environment:
     ANSIBLE_ROLE: "{{ ansible_role }}"
+    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
 
 - name: Run molecule prepare action with scenario delegated
@@ -43,6 +45,7 @@
     executable: /bin/bash
   environment:
     ANSIBLE_ROLE: "{{ ansible_role }}"
+    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
 
 - name: Reset connection
@@ -58,6 +61,7 @@
     executable: /bin/bash
   environment:
     ANSIBLE_ROLE: "{{ ansible_role }}"
+    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
 
 - name: Run molecule verify action with scenario delegated
@@ -70,6 +74,7 @@
     executable: /bin/bash
   environment:
     ANSIBLE_ROLE: "{{ ansible_role }}"
+    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
 
 - name: Run molecule destroy action with scenario delegated
@@ -82,4 +87,5 @@
     executable: /bin/bash
   environment:
     ANSIBLE_ROLE: "{{ ansible_role }}"
+    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true

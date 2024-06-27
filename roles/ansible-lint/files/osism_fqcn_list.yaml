@@ -484,6 +484,7 @@ openstack.cloud:
 kubernetes.core:
   - kubernetes.core.helm
   - kubernetes.core.k8s
+  - kubernetes.core.k8s_info
 
 other:
   - scan_services

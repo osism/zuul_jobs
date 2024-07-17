@@ -3,6 +3,12 @@
 - name: Include node specific install tasks
   ansible.builtin.include_tasks: "install-{{ ansible_os_family }}.yml"
 
+- name: Install requests
+  ansible.builtin.pip:
+    virtualenv: "{{ ansible_molecule_venv }}"
+    name: requests
+    chdir: "{{ zuul_work_dir }}"
+
 - name: Install requirements
   ansible.builtin.pip:
     virtualenv: "{{ ansible_molecule_venv }}"

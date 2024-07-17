@@ -10,3 +10,6 @@ devstack_password: password
 
 # Services to deploy
 devstack_services: "keystone g-api"
+
+# Use this option to enable the nova fake virt driver for testing
+devstack_use_fake_driver: false

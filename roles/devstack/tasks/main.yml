@@ -64,6 +64,8 @@
       RABBIT_PASSWORD={{ devstack_password }}
       SERVICE_PASSWORD={{ devstack_password }}
 
+      {{ 'VIRT_DRIVER=fake' if (devstack_use_fake_driver) else '' }}
+
       HOST_IP=127.0.0.1
       INSTALL_TEMPEST=False
 

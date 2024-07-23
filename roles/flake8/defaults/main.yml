@@ -1,4 +1,4 @@
 ---
-# defaults file for flake8
+python_venv_dir: /tmp/venv
 zuul_work_dir: "{{ zuul.project.src_dir }}"
 flake8_excludes: [""]

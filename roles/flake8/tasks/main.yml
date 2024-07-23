@@ -1,16 +1,18 @@
 ---
-# tasks file for flake8
-- name: Install python
+- name: Install Python
   ansible.builtin.include_role:
     name: "{{ item }}"
   loop:
     - ensure-python
     - ensure-pip
 
-- name: Install flake8
+- name: Install pip module flake8
   ansible.builtin.pip:
     name: flake8
-    executable: pip3
+    state: latest
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: "python3 -m venv"
+    # noqa package-latest
 
 - name: Find all .py files
   ansible.builtin.find:
@@ -25,7 +27,7 @@
     cmd: |
       set -o pipefail
       set -e
-      python3 -m flake8 {{ file | relpath(zuul_work_dir) }} 2>&1 | tee -a flake8.txt
+      {{ python_venv_dir }}/bin/python3 -m flake8 {{ file | relpath(zuul_work_dir) }} 2>&1 | tee -a flake8.txt
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
   loop: "{{ flake8_py_files.files | map(attribute='path') | list }}"

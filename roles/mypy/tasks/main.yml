@@ -1,25 +1,27 @@
 ---
-# tasks file for mypy
-- name: Install python
+- name: Install Python
   ansible.builtin.include_role:
     name: "{{ item }}"
   loop:
     - ensure-python
     - ensure-pip
 
-- name: Install mypy
+- name: Install pip module mypy
   ansible.builtin.pip:
     name: mypy
-    executable: pip3
+    state: latest
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: "python3 -m venv"
+    # noqa package-latest
 
 - name: Install repo requirements
   ansible.builtin.pip:
     requirements: "requirements.txt"
-    executable: pip3
+    virtualenv: "{{ python_venv_dir }}"
     chdir: "{{ zuul_work_dir }}"
 
 - name: Run mypy
   ansible.builtin.command:
-    cmd: "python3 -m mypy --ignore-missing-imports --install-types --non-interactive ."
+    cmd: "{{ python_venv_dir }}/bin/python3 -m mypy --ignore-missing-imports --install-types --non-interactive ."
     chdir: "{{ zuul_work_dir }}"
   changed_when: false

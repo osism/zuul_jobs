@@ -1,22 +1,25 @@
 ---
-- name: Install python
+- name: Install Python
   ansible.builtin.include_role:
     name: "{{ item }}"
   loop:
     - ensure-python
     - ensure-pip
 
-- name: Install yamllint
+- name: Install pip module yamllint
   ansible.builtin.pip:
     name: yamllint
-    executable: pip3
+    state: latest
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: "python3 -m venv"
+    # noqa package-latest
 
 - name: Run yamllint
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
       set -e
-      python3 -m yamllint . 2>&1 | tee -a yamllint.txt
-    chdir: "{{ zuul.project.src_dir }}"
+      {{ python_venv_dir }}/bin/python3 -m yamllint . 2>&1 | tee -a yamllint.txt
+    chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
   changed_when: false

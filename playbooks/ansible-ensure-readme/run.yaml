@@ -1,5 +1,0 @@
----
-- name: Run ansible-ensure-readme
-  hosts: all
-  roles:
-    - ansible-ensure-readme

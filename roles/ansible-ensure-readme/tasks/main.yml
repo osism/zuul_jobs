@@ -1,0 +1,22 @@
+---
+- name: Find all roles
+  ansible.builtin.find:
+    paths: "{{ zuul.project.src_dir }}/roles/"
+    file_type: directory
+  register: role_dirs
+
+- name: Check for README.md in each role
+  ansible.builtin.stat:
+    path: "{{ item.path }}/README.md"
+  register: readme_check
+  loop: "{{ role_dirs.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Fail if any role is missing README.md
+  ansible.builtin.fail:
+    msg: "Missing README.md in role {{ item.item.path }}"
+  when: not item.stat.exists
+  loop: "{{ readme_check.results }}"
+  loop_control:
+    label: "{{ item.item.path }}"

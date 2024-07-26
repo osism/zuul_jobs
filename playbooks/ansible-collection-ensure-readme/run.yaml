@@ -1,0 +1,5 @@
+---
+- name: Run ansible-collection-ensure-readme
+  hosts: all
+  roles:
+    - ansible-collection-ensure-readme

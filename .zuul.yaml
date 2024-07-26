@@ -1,5 +1,10 @@
 ---
 - job:
+    name: ansible-collection-ensure-readme
+    description: ansible-collection-ensure-readme job provided by OSISM
+    run: playbooks/ansible-collection-ensure-readme/run.yaml
+
+- job:
     name: ansible-lint
     description: ansible-lint job provided by OSISM
     run: playbooks/ansible-lint/run.yaml

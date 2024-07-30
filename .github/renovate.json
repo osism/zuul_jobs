@@ -1,5 +1,26 @@
 {
   "extends": [
     "github>osism/renovate-config"
+  ],
+  "regexManagers":[
+    {
+      "fileMatch":[
+        "^roles\\/ensure-opentofu\\/defaults\\/main\\.yaml"
+      ],
+      "matchStrings":[
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>.*?)\nopentofu_version: (?<currentValue>.*?)\n"
+     ],
+     "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch":[
+        "^roles\\/ansible-molecule\\/defaults\\/main.yml$",
+        "^roles\\/ansible-lint\\/defaults\\/main.yml$"
+        "^roles\\/hadolint\\/defaults\\/main.yml$"
+      ],
+      "matchStrings":[
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\n.*?_version: '(?<currentValue>.*?)'"
+     ]
+    }
   ]
 }

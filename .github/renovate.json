@@ -15,7 +15,7 @@
     {
       "fileMatch":[
         "^roles\\/ansible-molecule\\/defaults\\/main.yml$",
-        "^roles\\/ansible-lint\\/defaults\\/main.yml$"
+        "^roles\\/ansible-lint\\/defaults\\/main.yml$",
         "^roles\\/hadolint\\/defaults\\/main.yml$"
       ],
       "matchStrings":[

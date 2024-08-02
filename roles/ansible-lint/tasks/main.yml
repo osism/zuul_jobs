@@ -11,6 +11,24 @@
   ansible.builtin.package:
     name: ansible
 
+- name: Install ansible-lint
+  ansible.builtin.pip:
+    name: "ansible-lint=={{ ansible_lint_version }}"
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: "python3 -m venv"
+
+- name: Install jmespath
+  ansible.builtin.pip:
+    name: jmespath
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: "python3 -m venv"
+
+- name: Install HiYaPyCo
+  ansible.builtin.pip:
+    name: HiYaPyCo
+    virtualenv: "{{ python_venv_dir }}"
+    virtualenv_command: "python3 -m venv"
+
 - name: Install ansible collections
   ansible.builtin.command:
     cmd: "ansible-galaxy collection install {{ item }}"
@@ -22,21 +40,6 @@
     - kubernetes.core
     - openstack.cloud
 
-- name: Install ansible-lint
-  ansible.builtin.pip:
-    name: "ansible-lint=={{ ansible_lint_version }}"
-    executable: pip3
-
-- name: Install jmespath
-  ansible.builtin.pip:
-    name: jmespath
-    executable: pip3
-
-- name: Install HiYaPyCo
-  ansible.builtin.pip:
-    name: HiYaPyCo
-    executable: pip3
-
 - name: Copy default .ansible-lint configuration file
   ansible.builtin.copy:
     src: defaults-dot-ansible-lint
@@ -46,7 +49,7 @@
 - name: Prepare .ansible-lint configuration file
   ansible.builtin.script:
     cmd: "files/prepare-dot-ansible-lint.py /tmp/defaults-dot-ansible-lint"
-    executable: /usr/bin/python3
+    executable: "{{ python_venv_dir }}/bin/python3"
     chdir: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
 
 - name: Create .ansible-lint-rules directory
@@ -68,6 +71,6 @@
 
 - name: Run ansible-lint
   ansible.builtin.command:
-    cmd: "/usr/bin/python3 -m ansiblelint --nocolor -R"
+    cmd: "{{ python_venv_dir }}/bin/python3 -m ansiblelint --nocolor -R"
     chdir: "{{ zuul.project.src_dir }}"
   changed_when: false

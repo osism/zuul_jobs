@@ -1,4 +1,7 @@
 ---
 python_venv_dir: /tmp/venv
 zuul_work_dir: "{{ zuul.project.src_dir }}"
+
+# renovate: datasource=pypi depName=flake8
+flake8_version: '7.1.1'
 flake8_excludes: [""]

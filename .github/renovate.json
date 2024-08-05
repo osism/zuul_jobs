@@ -16,6 +16,7 @@
       "fileMatch":[
         "^roles\\/ansible-molecule\\/defaults\\/main.yml$",
         "^roles\\/ansible-lint\\/defaults\\/main.yml$",
+        "^roles\\/flake8\\/defaults\\/main.yml$",
         "^roles\\/hadolint\\/defaults\\/main.yml$",
         "^roles\\/yamllint\\/defaults\\/main.yml$"
       ],

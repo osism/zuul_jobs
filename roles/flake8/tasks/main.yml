@@ -1,18 +1,16 @@
 ---
-- name: Install Python
+- name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"
   loop:
     - ensure-python
     - ensure-pip
 
-- name: Install pip module flake8
+- name: Install flake8
   ansible.builtin.pip:
-    name: flake8
-    state: latest
+    name: "flake8=={{ flake8_version }}"
     virtualenv: "{{ python_venv_dir }}"
     virtualenv_command: "python3 -m venv"
-    # noqa package-latest
 
 - name: Find all .py files
   ansible.builtin.find:

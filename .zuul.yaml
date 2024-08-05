@@ -66,8 +66,12 @@
     check:
       jobs:
         - ansible-lint
+        - flake8
+        - python-black
         - yamllint
     gate:
       jobs:
         - ansible-lint
+        - flake8
+        - python-black
         - yamllint

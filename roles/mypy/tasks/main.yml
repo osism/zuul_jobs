@@ -1,18 +1,16 @@
 ---
-- name: Install Python
+- name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"
   loop:
     - ensure-python
     - ensure-pip
 
-- name: Install pip module mypy
+- name: Install mypy
   ansible.builtin.pip:
-    name: mypy
-    state: latest
+    name: "mypy=={{ mypy_version }}"
     virtualenv: "{{ python_venv_dir }}"
     virtualenv_command: "python3 -m venv"
-    # noqa package-latest
 
 - name: Install repo requirements
   ansible.builtin.pip:

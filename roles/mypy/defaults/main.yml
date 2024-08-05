@@ -1,3 +1,6 @@
 ---
 python_venv_dir: /tmp/venv
 zuul_work_dir: "{{ zuul.project.src_dir }}"
+
+# renovate: datasource=pypi depName=mypy
+mypy_version: '1.11.1'

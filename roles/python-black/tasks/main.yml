@@ -1,18 +1,16 @@
 ---
-- name: Install Python
+- name: Install python
   ansible.builtin.include_role:
     name: "{{ item }}"
   loop:
     - ensure-python
     - ensure-pip
 
-- name: Install pip module black
+- name: Install black
   ansible.builtin.pip:
-    name: black
-    state: latest
+    name: "black=={{ black_version }}"
     virtualenv: "{{ python_venv_dir }}"
     virtualenv_command: 'python3 -m venv'
-    # noqa package-latest
 
 - name: Format code with Black if there is nothing to exclude
   ansible.builtin.command:

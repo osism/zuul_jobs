@@ -27,6 +27,7 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
+  when: ansible_molecule_dependency | default(false) | bool
 
 - name: Run molecule create action with scenario delegated
   ansible.builtin.shell:
@@ -40,6 +41,7 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
+  when: ansible_molecule_create | default(false) | bool
 
 - name: Run molecule prepare action with scenario delegated
   ansible.builtin.shell:
@@ -53,6 +55,7 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
+  when: ansible_molecule_prepare | default(true) | bool
 
 - name: Reset connection
   ansible.builtin.meta: reset_connection
@@ -69,6 +72,7 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
+  when: ansible_molecule_converge | default(true) | bool
 
 - name: Run molecule verify action with scenario delegated
   ansible.builtin.shell:
@@ -82,6 +86,7 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
+  when: ansible_molecule_verify | default(true) | bool
 
 - name: Run molecule destroy action with scenario delegated
   ansible.builtin.shell:
@@ -95,3 +100,4 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
+  when: ansible_molecule_destroy | default(false) | bool

@@ -15,80 +15,12 @@
     requirements: molecule/requirements.txt
     chdir: "{{ zuul_work_dir }}"
 
-- name: Run molecule dependency action with scenario delegated
+- name: Run molecule test with scenario delegated
   ansible.builtin.shell:
     cmd: |
       set -e
       . {{ ansible_molecule_venv }}/bin/activate
-      python -m molecule --debug -v dependency -s delegated
-    chdir: "{{ zuul_work_dir }}"
-    executable: /bin/bash
-  environment:
-    ANSIBLE_ROLE: "{{ ansible_role }}"
-    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
-  changed_when: true
-
-- name: Run molecule create action with scenario delegated
-  ansible.builtin.shell:
-    cmd: |
-      set -e
-      . {{ ansible_molecule_venv }}/bin/activate
-      python -m molecule --debug -v create -s delegated
-    chdir: "{{ zuul_work_dir }}"
-    executable: /bin/bash
-  environment:
-    ANSIBLE_ROLE: "{{ ansible_role }}"
-    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
-  changed_when: true
-
-- name: Run molecule prepare action with scenario delegated
-  ansible.builtin.shell:
-    cmd: |
-      set -e
-      . {{ ansible_molecule_venv }}/bin/activate
-      python -m molecule --debug -v prepare -s delegated
-    chdir: "{{ zuul_work_dir }}"
-    executable: /bin/bash
-  environment:
-    ANSIBLE_ROLE: "{{ ansible_role }}"
-    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
-  changed_when: true
-
-- name: Reset connection
-  ansible.builtin.meta: reset_connection
-
-- name: Run molecule converge action with scenario delegated
-  ansible.builtin.shell:
-    cmd: |
-      set -e
-      . {{ ansible_molecule_venv }}/bin/activate
-      python -m molecule --debug -v converge -s delegated
-    chdir: "{{ zuul_work_dir }}"
-    executable: /bin/bash
-  environment:
-    ANSIBLE_ROLE: "{{ ansible_role }}"
-    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
-  changed_when: true
-
-- name: Run molecule verify action with scenario delegated
-  ansible.builtin.shell:
-    cmd: |
-      set -e
-      . {{ ansible_molecule_venv }}/bin/activate
-      python -m molecule --debug -v verify -s delegated
-    chdir: "{{ zuul_work_dir }}"
-    executable: /bin/bash
-  environment:
-    ANSIBLE_ROLE: "{{ ansible_role }}"
-    ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
-  changed_when: true
-
-- name: Run molecule destroy action with scenario delegated
-  ansible.builtin.shell:
-    cmd: |
-      set -e
-      . {{ ansible_molecule_venv }}/bin/activate
-      python -m molecule --debug -v destroy -s delegated
+      python -m molecule --debug -v test -s delegated
     chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
   environment:

@@ -27,7 +27,7 @@
     ANSIBLE_ROLE: "{{ ansible_role }}"
     ANSIBLE_PYTHON_INTERPRETER: "{{ ansible_molecule_venv }}/bin/python"
   changed_when: true
-  when: ansible_molecule_dependency | default(false) | bool
+  when: ansible_molecule_dependency | default(true) | bool
 
 - name: Run molecule create action with scenario delegated
   ansible.builtin.shell:

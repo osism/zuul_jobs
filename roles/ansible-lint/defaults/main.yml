@@ -1,5 +1,0 @@
----
-python_venv_dir: /tmp/venv
-
-# renovate: datasource=pypi depName=ansible-lint
-ansible_lint_version: '24.9.2'

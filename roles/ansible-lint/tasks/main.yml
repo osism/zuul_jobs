@@ -1,76 +1,12 @@
 ---
-- name: Install python
-  ansible.builtin.include_role:
-    name: "{{ item }}"
-  loop:
-    - ensure-python
-    - ensure-pip
-
-- name: Install ansible
-  become: true
-  ansible.builtin.package:
-    name: ansible
-
-- name: Install ansible-lint
-  ansible.builtin.pip:
-    name: "ansible-lint=={{ ansible_lint_version }}"
-    virtualenv: "{{ python_venv_dir }}"
-    virtualenv_command: "python3 -m venv"
-
-- name: Install jmespath
-  ansible.builtin.pip:
-    name: jmespath
-    virtualenv: "{{ python_venv_dir }}"
-    virtualenv_command: "python3 -m venv"
-
-- name: Install HiYaPyCo
-  ansible.builtin.pip:
-    name: HiYaPyCo
-    virtualenv: "{{ python_venv_dir }}"
-    virtualenv_command: "python3 -m venv"
-
-- name: Install ansible collections
+- name: Pull ansible-lint image
   ansible.builtin.command:
-    cmd: "ansible-galaxy collection install {{ item }}"
+    cmd: "podman pull osism.harbor.regio.digital/osism/ansible-lint:latest"
   changed_when: false
-  loop:
-    - ansible.posix
-    - community.docker
-    - community.general
-    - kubernetes.core
-    - openstack.cloud
-
-- name: Copy default .ansible-lint configuration file
-  ansible.builtin.copy:
-    src: defaults-dot-ansible-lint
-    dest: /tmp/defaults-dot-ansible-lint
-    mode: 0644
-
-- name: Prepare .ansible-lint configuration file
-  ansible.builtin.script:
-    cmd: "files/prepare-dot-ansible-lint.py /tmp/defaults-dot-ansible-lint"
-    executable: "{{ python_venv_dir }}/bin/python3"
-    chdir: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
-
-- name: Create .ansible-lint-rules directory
-  ansible.builtin.file:
-    path: "{{ zuul.project.src_dir }}/.ansible-lint-rules"
-    state: directory
-    mode: 0755
-
-- name: Copy ansible lint rules to .ansible-lint-rules directory
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ zuul.project.src_dir }}/.ansible-lint-rules/{{ item }}"
-    mode: 0644
-  loop:
-    - osism_attribute_order.py
-    - osism_attribute_order_list.yaml
-    - osism_fqcn.py
-    - osism_fqcn_list.yaml
 
 - name: Run ansible-lint
   ansible.builtin.command:
-    cmd: "{{ python_venv_dir }}/bin/python3 -m ansiblelint --nocolor -R"
-    chdir: "{{ zuul.project.src_dir }}"
+    cmd: "podman run --volume ./{{ zuul.project.src_dir }}:/zuul:rw osism.harbor.regio.digital/osism/ansible-lint:latest"
+  register: result
+  failed_when: "'0 failure(s)' not in result.stdout"
   changed_when: false

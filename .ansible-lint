@@ -1,4 +1,6 @@
 ---
+mock_roles:
+  - ensure-podman
 exclude_paths:
   - playbooks/publish-pypi-package/post-run.yaml
 skip_list:

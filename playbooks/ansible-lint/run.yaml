@@ -1,5 +1,17 @@
 ---
 - name: Run ansible-lint
   hosts: all
-  roles:
-    - ansible-lint
+
+  tasks:
+    - name: Update package cache
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Apply ensure-podman role
+      ansible.builtin.import_role:
+        name: ensure-podman
+
+    - name: Apply ansible-lint -podman role
+      ansible.builtin.import_role:
+        name: ansible-lint

@@ -1,8 +1,9 @@
 ---
 - name: Pull ansible-lint image
-  ansible.builtin.command:
-    cmd: "podman pull osism.harbor.regio.digital/osism/ansible-lint:latest"
-  changed_when: false
+  containers.podman.podman_image:
+    name: osism.harbor.regio.digital/osism/ansible-lint:latest
+  retries: 3
+  delay: 3
 
 - name: Run ansible-lint
   ansible.builtin.command:

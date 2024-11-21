@@ -4,6 +4,8 @@
   roles:
     - upload-pypi
   vars:
+    python_venv_dir: "$HOME/venv"
+    pypi_twine_executable: "{{ python_venv_dir }}/bin/python -m twine"
     pypi_info:
       api_token: "{{ secret.PYPI_API_TOKEN }}"
     pypi_path: "{{ zuul.project.src_dir }}/dist"

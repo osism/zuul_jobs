@@ -38,6 +38,7 @@
     name: hadolint
     description: hadolint job provided by OSISM
     run: playbooks/hadolint/run.yaml
+    ansible-version: 8
 
 - job:
     name: mypy

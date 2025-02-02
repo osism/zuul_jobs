@@ -4,4 +4,6 @@ zuul_work_dir: "{{ zuul.project.src_dir }}"
 ansible_molecule_venv: /home/zuul/venv
 # renovate: datasource=pypi depName=ansible
 ansible_molecule_ansible_version: '11.2.0'
-ansible_molecule_python_version_centos: "3.11"
+
+ensure_pip_from_packages: false
+ensure_pip_from_upstream: true

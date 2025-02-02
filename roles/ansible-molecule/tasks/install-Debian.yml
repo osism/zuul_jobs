@@ -18,13 +18,6 @@
     name: ensure-pip
   when: ansible_distribution_release != "jammy"
 
-- name: Install pip
-  become: true
-  ansible.builtin.apt:
-    name: python3.11-pip
-    state: present
-  when: ansible_distribution_release == "jammy"
-
 - name: Install Ansible {{ ansible_molecule_ansible_version }}
   ansible.builtin.pip:
     name: "ansible=={{ ansible_molecule_ansible_version }}"

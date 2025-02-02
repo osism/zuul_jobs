@@ -3,6 +3,12 @@
 - name: Include OS specific vars
   ansible.builtin.include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_release | default(ansible_distribution_version) }}.yml"
 
+- name: Update package cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"
+
 - name: Install Python
   ansible.builtin.include_role:
     name: "{{ item }}"

@@ -1,10 +1,29 @@
 ---
-- name: Install python and pip
+- name: Force update of package cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Set python_version
+  ansible.builtin.set_fact:
+    python_version: "3.11"
+  when: ansible_distribution_release == "jammy"
+
+- name: Install python
   ansible.builtin.include_role:
-    name: "{{ item }}"
-  loop:
-    - ensure-python
-    - ensure-pip
+    name: ensure-python
+
+- name: Install pip
+  ansible.builtin.include_role:
+    name: ensure-pip
+  when: ansible_distribution_release != "jammy"
+
+- name: Install pip
+  become: true
+  ansible.builtin.apt:
+    name: python3.11-pip
+    state: present
+  when: ansible_distribution_release == "jammy"
 
 - name: Install Ansible {{ ansible_molecule_ansible_version }}
   ansible.builtin.pip:
@@ -12,3 +31,12 @@
     virtualenv: "{{ ansible_molecule_venv }}"
     virtualenv_command: python3 -m venv
     state: present
+  when: ansible_distribution_release != "jammy"
+
+- name: Install Ansible {{ ansible_molecule_ansible_version }}
+  ansible.builtin.pip:
+    name: "ansible=={{ ansible_molecule_ansible_version }}"
+    virtualenv: "{{ ansible_molecule_venv }}"
+    virtualenv_command: python3.11 -m venv
+    state: present
+  when: ansible_distribution_release == "jammy"

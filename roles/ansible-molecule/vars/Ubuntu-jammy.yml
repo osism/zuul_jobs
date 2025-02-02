@@ -1,4 +1,3 @@
 ---
+python_binary: /usr/bin/python3.11
 python_version: "3.11"
-ensure_pip_from_upstream_interpreters:
-  - /usr/bin/python3.11

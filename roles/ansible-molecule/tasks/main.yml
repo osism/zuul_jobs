@@ -14,13 +14,12 @@
     name: "{{ item }}"
   loop:
     - ensure-python
-    - ensure-pip
 
 - name: Install Ansible {{ ansible_molecule_ansible_version }}
   ansible.builtin.pip:
     name: "ansible=={{ ansible_molecule_ansible_version }}"
     virtualenv: "{{ ansible_molecule_venv }}"
-    virtualenv_command: python3 -m venv
+    virtualenv_command: "{{ python_binary | default('python3') -m venv }}"
     state: present
 
 - name: Install requests
